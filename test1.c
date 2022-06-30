@@ -9,7 +9,6 @@ struct list {
 
 typedef struct list LIST;
 
-
 int main(void) {
     FILE *fp;
     char line[128];
