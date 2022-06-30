@@ -30,12 +30,12 @@ int main(void) {
         }
     }
     fclose(fp);
-    //test print
+
     i = 0;
     for(current = head; current ; current=current->next){
         printf("line: %d - content: %s",i,  current->string);
         i++;
     }
-    //need free for each node
+
     return 0;
 }
