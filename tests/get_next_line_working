@@ -87,7 +87,7 @@ static char *ft_save_str(char *s1)
 	static char *data;
 
 	if (!data)
-		data = malloc(sizeof(s1) + 1);
+		data = "";
 	data = ft_str_join(data, s1);
 	return (data);
 }
