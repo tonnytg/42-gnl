@@ -51,20 +51,20 @@ static char *ft_str_join(char *s1, char *s2)
 	return (result);
 }
 
-static char *ft_split_str(char *str, int *y) {
+static char *ft_split_str(char *str, int *start) {
 	char *word;
-	int j;
 	int count;
-	int x;
+	int i;
+	int j;
 
+	i = *start;
 	j = 0;
-	x = *y;
-	count = ft_count_word(str, y);
+	count = ft_count_word(str, start);
 	word = malloc( count * sizeof(char) + 1);
-	while (str[x] != '\n' && str[x] != '\0' )
+	while (str[i] != '\n' && str[i] != '\0' )
 	{
-		word[j] = str[x];
-		x++;
+		word[j] = str[i];
+		i++;
 		j++;
 	}
 	word[j] = '\0';
