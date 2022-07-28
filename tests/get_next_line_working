@@ -8,7 +8,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-
 static int ft_count_word(char *str, int *start) {
 	int count;
 	int i;
@@ -24,40 +23,14 @@ static int ft_count_word(char *str, int *start) {
 	return (count);
 }
 
-static char *ft_split_str(char *str, int *y) {
-	int j;
-	int count;
-	int x;
-	static char *word;
-
-	j = 0;
-	x = *y;
-	count = ft_count_word(str, y);
-	word = malloc( count * sizeof(char) + 1);
-	while (str[x] != '\n' && str[x] != '\0' )
-	{
-		word[j] = str[x];
-		x++;
-		j++;
-	}
-	word[j] = '\0';
-	return (word);
-}
-
-char *ft_call_word(char *str)
-{
-	static int y;
-	static char *word;
-	word = ft_split_str(str, &y);
-	return (word);
-}
-
-static char *ft_strjoin(char *s1, char *s2)
+static char *ft_str_join(char *s1, char *s2)
 {
 	char *result;
 	int i;
 	int j;
 
+	if (!s1 || !s2)
+		return (NULL);
 	result = malloc((sizeof(s1) + sizeof(s2)) + 1);
 	i = 0;
 	j = 0;
@@ -78,16 +51,45 @@ static char *ft_strjoin(char *s1, char *s2)
 	return (result);
 }
 
-static char *ft_save(char *s1)
+static char *ft_split_str(char *str, int *y) {
+	char *word;
+	int j;
+	int count;
+	int x;
+
+	j = 0;
+	x = *y;
+	count = ft_count_word(str, y);
+	word = malloc( count * sizeof(char) + 1);
+	while (str[x] != '\n' && str[x] != '\0' )
+	{
+		word[j] = str[x];
+		x++;
+		j++;
+	}
+	word[j] = '\0';
+	return (word);
+}
+
+static char *ft_call_word(char *str)
+{
+	char *word;
+	static int y;
+
+	word = ft_split_str(str, &y);
+	return (word);
+}
+
+static char *ft_save_str(char *s1)
 {
 	static char *data = "";
-	data = ft_strjoin(data, s1);
+
+	data = ft_str_join(data, s1);
 	return data;
 }
 
-static char *ft_getdata(int fd)
+static char *ft_get_data(int fd)
 {
-	static char *full;
 	static char buf[BUFSIZE];
 	static char *word;
 	int bytes_transfer;
@@ -99,15 +101,15 @@ static char *ft_getdata(int fd)
 	while ((bytes_read = read(fd, &buf, bytes_transfer)) > 0)
 	{
 		buf[bytes_read] = '\0';
-		word = ft_save(buf);
+		word = ft_save_str(buf);
 	}
 	return (word);
 }
 
-char *get_next_line(int fd)
+static char *get_next_line(int fd)
 {
-	static char *str;
-	str = ft_getdata(fd);
+	char *str;
+	str = ft_get_data(fd);
 
 	return (ft_call_word(str));
 }
