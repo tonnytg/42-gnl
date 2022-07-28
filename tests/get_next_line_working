@@ -76,6 +76,8 @@ static char *ft_call_word(char *str)
 	char *word;
 	static int y;
 
+	if (str[y] == '\0')
+		return (NULL);
 	word = ft_split_str(str, &y);
 	return (word);
 }
@@ -87,7 +89,7 @@ static char *ft_save_str(char *s1)
 	if (!data)
 		data = malloc(sizeof(s1) + 1);
 	data = ft_str_join(data, s1);
-	return data;
+	return (data);
 }
 
 static char *ft_get_data(int fd)
