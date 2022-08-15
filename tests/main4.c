@@ -11,8 +11,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+<<<<<<< HEAD
 
 // percorre duas strings e adiciona o valor em uma outra, adicionando nulo no final
+=======
+>>>>>>> 270faf4de41c640186c15552222fade10f7fbbf0
 static char *ft_strjoin(char *s1, char *s2)
 {
 	char *result;
@@ -40,7 +43,10 @@ static char *ft_strjoin(char *s1, char *s2)
 	return (result);
 }
 
+<<<<<<< HEAD
 // cache das letras lidas
+=======
+>>>>>>> 270faf4de41c640186c15552222fade10f7fbbf0
 static char *ft_save(char *s1)
 {
   static char *data = "";
@@ -48,7 +54,10 @@ static char *ft_save(char *s1)
   return data;
 }
 
+<<<<<<< HEAD
 // coleta as letras dentro de sua capacidade
+=======
+>>>>>>> 270faf4de41c640186c15552222fade10f7fbbf0
 static char *collect_content(fd)
 {
 	static char *full;
@@ -70,6 +79,7 @@ static char *collect_content(fd)
 	return (content);
 }
 
+<<<<<<< HEAD
 static int ft_strlen_custom(char *str, char c)
 {
 	int i;
@@ -111,6 +121,9 @@ static char *ft_gen_array(char *str, int x)
 // quebra o conteúdo
 static char *split_str(char *str, char c)
 {
+=======
+static char *split_str(char *str, char c) {
+>>>>>>> 270faf4de41c640186c15552222fade10f7fbbf0
 	int i;
 	int count;
 
