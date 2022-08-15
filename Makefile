@@ -1,15 +1,11 @@
-NAME = 
-CC = gcc
-CC_ARGS = -Wall, -Wextra -Werror
 
+SRC= "./srcs/"
 
+all: copile
 
-all:
-
-$(NAME):
+copile:
+	cc -g3 main.c $(SRC)get_next_line.c $(SRC)get_next_line.h $(SRC)get_next_line_utils.c -D BUFFER_SIZE=3 && ./a.out
 
 clean:
-
-fclean:
-
-re:
+	rm tests/a.out
+	rm srcs/a.out
