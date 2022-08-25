@@ -1,78 +1,88 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: antthoma <antthoma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/16 01:41:41 by antthoma          #+#    #+#             */
+/*   Updated: 2022/08/24 13:59:26 by antthoma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-int		ft_count_word(char *str, int *start)
+size_t	ft_strlen(char const *str)
 {
-	int count;
-	int i;
-
-	count = 0;
-	i = *start;
-	while (str[i] != '\n' && str[i] != '\0')
-	{
-		count++;
-		i++;
-	}
-	if (str[i] != '\0')
-		*start = i + 1;
-	else
-		*start = i;
-	return (count);
-}
-
-int		ft_strlen(char const *str)
-{
-	int i;
+	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (!str || str[i] != '\0')
 		i++;
 	return (i);
 }
 
+char	*ft_read_buff(int fd)
+{
+	char	*buff;
+	char	*slice;
+	int		*bytes_transfer;
+	int		bytes_read;
 
-char	*ft_str_join(char const *s1, char const *s2)
+	if (BUFFER_SIZE < 0)
+		return (NULL);
+	bytes_transfer = malloc(BUFFER_SIZE * sizeof(int *));
+	*bytes_transfer = BUFFER_SIZE;
+	buff = malloc(BUFFER_SIZE * sizeof(char *) + 1);
+	if (!buff)
+		return (NULL);
+	bytes_read = read(fd, buff, *bytes_transfer);
+	free(bytes_transfer);
+	if (bytes_read < 1)
+	{
+		free(buff);
+		return (NULL);
+	}
+	buff[bytes_read] = '\0';
+	slice = ft_strdup(buff);
+	free(buff);
+	return (slice);
+}
+
+char	*ft_strdup(char *str)
+{
+	char	*dest;
+	size_t	i;
+
+	dest = (char *) malloc((ft_strlen(str) + 1) * sizeof(char));
+	if (!dest)
+		return (NULL);
+	i = 0;
+	while (*str)
+		dest[i++] = *str++;
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	*ft_char_append(char *s1, char c)
 {
 	int		i;
-	int		j;
 	char	*m;
 
-	if (!s1 || !s2)
+	if (!s1 || !c)
 		return (NULL);
-	m = (char *)malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
+	m = malloc((ft_strlen(s1) + sizeof(c)) + 1);
 	if (!m)
 		return (NULL);
 	i = 0;
-	j = 0;
-	while (s1[j])
-		m[i++] = s1[j++];
-	j = 0;
-	while (s2[j])
-		m[i++] = s2[j++];
-	m[i] = '\0';
-	return (m);
-}
-
-char	*ft_split_str(char *str, int *start)
-{
-	char *word;
-	int count;
-	int i;
-	int j;
-
-	i = *start;
-	if (!str[i])
-		return (NULL);
-	count = ft_count_word(str, start);
-	word = malloc( count * sizeof(char) + 1);
-	if (!word)
-		return (NULL);
-	j = 0;
-	while (str[i] != '\n' && str[i] != '\0' )
+	while (s1[i] != '\0')
 	{
-		word[j] = str[i];
+		m[i] = s1[i];
 		i++;
-		j++;
 	}
-	word[j] = '\0';
-	return (word);
+	m[i] = c;
+	i++;
+	m[i] = '\0';
+	free(s1);
+	return (m);
 }
